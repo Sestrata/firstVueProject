@@ -1,5 +1,10 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
+import { createApp } from 'vue';
+import './style.css';
+import App from './App.vue';
+import HelloWorld from './components/HelloWorld.vue';
 
-createApp(App).mount('#app')
+const app = createApp(App);
+
+app.component('HelloWorld', HelloWorld); //регистрация на глобално ниво - Glob...
+
+app.mount('#app');

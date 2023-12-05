@@ -57,6 +57,10 @@ button:focus-visible {
 .card {
   padding: 2em;
 }
+input {
+  background-color: white;
+  color:black;
+}
 
 #app {
   max-width: 1280px;
