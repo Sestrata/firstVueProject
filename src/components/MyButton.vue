@@ -1,5 +1,9 @@
-<script>
+<!-- <script>
 export default {
+  props: {
+    btnColor: String,
+  },
+  emits: ["onClick"],
   data() {
     return {
       count: 0,
@@ -7,14 +11,21 @@ export default {
   },
   methods: {
     onClick() {
-      this.count += 1;
+      this.count += 1;this.$emit('onClick', this.count);
     },
   },
 };
 </script>
 
 <template>
-  <button @click="onClick">I've been clicked {{ count }}</button>
+  <button :style="{ background: btnColor }" @click="onClick">
+    I've been clicked {{ count }} times
+    <br>
+    <slot /> !!!!!!<slot>HI</slot>-каквото се подаде м/у слот е дефолтна стойност!!!!!!
+    <footer>
+      <slot name="footer"></slot>
+    </footer>
+  </button>
 </template>
 
-<style scoped></style>
+<style scoped></style> -->

@@ -1,23 +1,109 @@
 <script>
-import MyButton from "./components/MyButton.vue";
+import Header from "./components/Header.vue";
+import Footer from "./components/Footer.vue";
+import Home from "./views/Home.vue";
+import Category from "./views/Category/Category.vue";
+import Profile from "./views/Profile.vue";
+import Register from "./views/Register.vue";
+import Login from "./views/Login.vue";
+import Cart from "./views/Cart.vue";
 
 export default {
-  components:{
-    MyButton
-  }
+  components: {
+    Header,
+    Footer,
+    Home,
+    Category,
+    Profile,
+    Register,
+    Login,
+    Cart,
+  },
+  data() {
+    return {
+      view: "Home",
+      cartProducts: [],
+    };
+  },
+  methods: {
+    onNavSelect(selectedView) {
+      this.view = selectedView;
+    },
+    onAddToCart(productId) {
+      this.cartProducts.push(productId);
+    },
+  },
 };
 </script>
 
 <template>
-  <h1>Hello components</h1>
-  <MyButton />
-  <HelloWorld /> <!--на глобално ниво-->
+  <Header :cart-products="cartProducts" @on-select="onNavSelect" />
+  <main>
+    <component :is="view" :cart-products="cartProducts" @on-add-to-cart="onAddToCart" />
+  </main>
+  <Footer />
 </template>
 
 <style scoped>
+main {
+  margin: 70px 50px 20px 50px;
+  text-align: center;
+}
 </style>
 
-<!-- <script>
+<!--<script>
+import MyButton from "./components/MyButton.vue";
+
+export default {
+  components: {
+    MyButton,
+  },
+  data() {
+    return {
+      btnColor: "pink",
+      countText: 0,
+      authorName: "Elena",
+    };
+  },
+  created() {
+    console.log("In created cycle", this.btnColor);
+  },
+  mounted() {
+    console.log("In mounted cycle", this.btnColor);
+  },
+  methods: {
+    handleClick(count) {
+      this.countText = count;
+    },
+    capitalize(string) {
+      return string.toUpperCase();
+    },
+  },
+};
+</script>
+
+<template>
+  <h1>Hello components. We have {{ countText }} clicks</h1>
+  <MyButton :btn-color="btnColor" @on-click="handleClick" />
+  <MyButton>
+    <p>The author is {{ capitalize(authorName) }}</p>
+    <span>Hello</span>
+    <input>
+
+    <template #footer>
+      <h3>I'm the footer</h3>
+    </template>
+  </MyButton>
+  <HelloWorld />
+  !!!!!!!!!!!!!!!!!!!!!!!на глобално ниво!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+</template>
+
+<style scoped></style>
+
+
+-----------------------------------------------------------------------
+
+<script>
 export default {
   data() {
     return {
