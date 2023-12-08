@@ -26,7 +26,7 @@ export default {
         <li><a href="#" @click.prevent="onSelect('Login')">LOGIN</a></li>
         <li><a href="#" @click.prevent="onSelect('Register')">REGISTER</a></li>
         <li>
-          <a href="#" role="button" @click.prevent="onSelect('Cart')">CART <span v-if="cartProducts.length">({{ cartProducts.length }})</span></a>
+          <a href="#" role="button" @click.prevent="onSelect('Cart')">CART<span v-if="cartProducts.length">({{ cartProducts.length }})</span></a>
         </li>
       </ul>
     </nav>
@@ -67,7 +67,7 @@ header nav ul li {
 
 header nav ul li:last-child {
   margin-right: 0px;
-  background-color: rgb(191, 200, 227);
+  background-color: rgb(118, 209, 255);
 }
 
 header nav ul li a {

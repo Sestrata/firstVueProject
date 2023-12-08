@@ -4,7 +4,7 @@ import Footer from "./components/Footer.vue";
 import Home from "./views/Home.vue";
 import Category from "./views/Category/Category.vue";
 import Profile from "./views/Profile.vue";
-import Register from "./views/Register.vue";
+import Register from "./views/Register/Register.vue";
 import Login from "./views/Login.vue";
 import Cart from "./views/Cart.vue";
 

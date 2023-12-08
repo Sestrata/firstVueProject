@@ -3,7 +3,7 @@ export default {};
 </script>
 
 <template>
-  <div>Register</div>
+  <div>Second form</div>
 </template>
 
 <style scoped></style>
