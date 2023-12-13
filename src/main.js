@@ -1,10 +1,12 @@
 import { createApp } from 'vue';
+import {createPinia} from 'pinia';
 import './styles/reset.css';
 import App from './App.vue';
-// import HelloWorld from './components/HelloWorld.vue';
+import router from "./router/router";
 
 const app = createApp(App);
+const pinia = createPinia();
 
-// app.component('HelloWorld', HelloWorld); //регистрация на глобално ниво - Glob...
-
+app.use(pinia);
+app.use(router);
 app.mount('#app');

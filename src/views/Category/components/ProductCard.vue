@@ -1,4 +1,7 @@
 <script>
+import { mapState } from "pinia";
+import { useCartStore } from "../../../store/cartstore";
+
 export default {
   props: {
     product: {
@@ -14,30 +17,42 @@ export default {
         stock: 0,
         category: "animals",
         thumbnail:
-          "https://ichef.bbci.co.uk/news/999/cpsprodpb/15951/production/_117310488_16.jpg",
+          "https://images.unsplash.com/photo-1546587348-d12660c30c50?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bmF0dXJhbHxlbnwwfHwwfHx8MA%3D%3D",
       }),
     },
   },
   emits: ["onAddToCart"],
+  computed: {
+    ...mapState(useCartStore, ["getProduct"]),
+    isDisabled() {
+      const current = this.getProduct(this.product.id);
+      if (!current) {
+        return false;
+      }
+      return current.quantity >= this.product.stock;
+    },
+  },
 };
 </script>
 
 <template>
-  <article class="pic">
+  <article class="photo">
     <section class="small-container">
-      <img :src="product.thumbnail" alt="" />
+      <img :src="product.thumbnail" alt="thumbnail" />
       <h2>{{ product.title }}</h2>
       <p>Category: {{ product.category }}</p>
       <p>Description: {{ product.description }}</p>
       <h4>Price: {{ product.price }} $</h4>
       <h5>Rating: {{ product.rating }}</h5>
-      <button @click="$emit('onAddToCart', product.id)">Add to Cart</button>
+      <button @click="$emit('onAddToCart', product.id)" :disabled="isDisabled">
+        Add to Cart
+      </button>
     </section>
   </article>
 </template>
 
 <style scoped>
-.pic {
+.photo {
   width: calc((100% - (2 * 1vw) - 1vw) / 4);
   background-color: white;
   font-size: 0.8rem;
@@ -46,17 +61,21 @@ export default {
   overflow: hidden;
   box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.4);
 }
-
-.pic .small-container {
+.photo .small-container {
   margin: 0.4rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  position: relative;
 }
-.pic .small-container > img {
+.photo .small-container > img {
   width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
 }
 
-.pic .small-container h2{
+.photo .small-container h2 {
   color: rgb(105, 143, 249);
   text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
 }
@@ -65,7 +84,6 @@ export default {
   background-color: rgb(105, 143, 249);
   border: none;
   border-radius: 6px;
-  box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.4);
 }
 
 .small-container button:hover {

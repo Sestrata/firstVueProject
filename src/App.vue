@@ -1,45 +1,24 @@
 <script>
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
-import Home from "./views/Home.vue";
-import Category from "./views/Category/Category.vue";
-import Profile from "./views/Profile.vue";
-import Register from "./views/Register/Register.vue";
-import Login from "./views/Login.vue";
-import Cart from "./views/Cart.vue";
+import { RouterView } from "vue-router";
 
 export default {
   components: {
     Header,
     Footer,
-    Home,
-    Category,
-    Profile,
-    Register,
-    Login,
-    Cart,
+    RouterView,
   },
   data() {
-    return {
-      view: "Home",
-      cartProducts: [],
-    };
-  },
-  methods: {
-    onNavSelect(selectedView) {
-      this.view = selectedView;
-    },
-    onAddToCart(productId) {
-      this.cartProducts.push(productId);
-    },
+    return {};
   },
 };
 </script>
 
 <template>
-  <Header :cart-products="cartProducts" @on-select="onNavSelect" />
+  <Header />
   <main>
-    <component :is="view" :cart-products="cartProducts" @on-add-to-cart="onAddToCart" />
+    <RouterView />
   </main>
   <Footer />
 </template>

@@ -1,17 +1,16 @@
 <script>
+import { mapState } from "pinia";
+import { useCartStore } from "../store/cartstore";
+import { useUserStore } from "../store/userStore";
+import { RouterLink } from "vue-router";
+
 export default {
-  props: {
-    cartProducts: {
-      type: Array,
-      required: true,
-      default: () => [],
-    },
+  components: {
+    RouterLink,
   },
-  emits: ["onSelect"],
-  methods: {
-    onSelect(view) {
-      this.$emit("onSelect", view);
-    },
+  computed: {
+    ...mapState(useCartStore, ["products"]),
+    ...mapState(useUserStore, ["profile"]),
   },
 };
 </script>
@@ -20,13 +19,20 @@ export default {
   <header>
     <nav>
       <ul>
-        <li><a href="#" @click.prevent="onSelect('Home')">HOME</a></li>
-        <li><a href="#" @click.prevent="onSelect('Category')">CATEGORY</a></li>
-        <li><a href="#" @click.prevent="onSelect('Profile')">PROFILE</a></li>
-        <li><a href="#" @click.prevent="onSelect('Login')">LOGIN</a></li>
-        <li><a href="#" @click.prevent="onSelect('Register')">REGISTER</a></li>
+        <li><RouterLink to="/">HOME</RouterLink></li>
+        <li><RouterLink to="/category">CATEGORY</RouterLink></li>
+        <li v-if="profile">
+          <RouterLink to="/profile" class="profileImg">
+            PROFILE <img :src="profile.image" alt=""/>
+          </RouterLink>
+        </li>
+        <li><RouterLink to="/login">LOGIN</RouterLink></li>
+        <li><RouterLink to="/register">REGISTER</RouterLink></li>
         <li>
-          <a href="#" role="button" @click.prevent="onSelect('Cart')">CART<span v-if="cartProducts.length">({{ cartProducts.length }})</span></a>
+          <RouterLink to="/cart" role="button">
+            CART
+            <span v-if="products.length">({{ products.length }})</span>
+          </RouterLink>
         </li>
       </ul>
     </nav>
@@ -81,5 +87,20 @@ header div {
 
 header nav ul li a:hover {
   color: white;
+}
+
+.profileImg {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+.profileImg img {
+  width: 2rem;
+  height: auto;
+  border-radius: 100%;
+  overflow: hidden;
+  border:1px solid black;
+  background-color: rgb(118, 209, 255);
+  margin: 0px auto;
 }
 </style>

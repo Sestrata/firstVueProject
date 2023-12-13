@@ -1,13 +1,10 @@
 <script>
-import { categories } from "../../../constants/category";
-
 export default {
-  data() {
-    return {
-      categories,
-    };
-  },
   props: {
+    categories: {
+      type: Array,
+      default: () => [],
+    },
     activeItem: {
       type: String,
       required: true,
@@ -29,12 +26,12 @@ export default {
 <template>
   <div class="filter">
     <ul>
-      <li v-for="category in categories" :key="category.value">
+      <li v-for="category in categories" :key="category">
         <button
-          :class="[activeItem === category.value ? 'selectItem' : 'item']"
-          @click="onSelect(category.value)"
+          :class="[activeItem === category ? 'selectItem' : 'item']"
+          @click="onSelect(category)"
         >
-          {{ category.name }}
+          {{ category.toUpperCase() }}
         </button>
       </li>
     </ul>
@@ -48,25 +45,28 @@ export default {
 }
 
 .filter ul {
-  margin: 0px;
-  padding: 0px;
   display: flex;
+  flex-wrap: wrap;
   text-align: center;
+  gap: 0.2vw;
+  padding: 20px;
+  justify-content: space-evenly;
 }
 
 .filter ul li {
-  list-style: none;
-  padding: 6px;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  border-radius: 6px;
+  margin: 8px;
+  box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.4);
 }
 
 .filter ul li .item {
   text-decoration: none;
-  color: black;
   background-color: rgb(105, 143, 249);
   border: none;
   border-radius: 6px;
-  box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.4);
   padding: 4px 8px;
 }
 

@@ -1,17 +1,25 @@
 <script>
 import Filters from "./components/Filters.vue";
-import { products } from "../../constants/products";
 import ProductCard from "./components/ProductCard.vue";
+import { useCartStore } from "../../store/cartstore";
+import { mapActions } from "pinia";
+import { getAllProducts } from "../../dataProviders/products";
+import { getAllCategories } from "../../dataProviders/categories";
 
 export default {
   components: { Filters, ProductCard },
   data() {
     return {
       selectedFilter: "",
-      products,
+      products: [],
+      categories: [],
     };
   },
-  emits: ["onAddToCart"],
+  async created() {
+    const promises = await Promise.all([getAllProducts(), getAllCategories()]);
+    this.products = promises[0].products;
+    this.categories = promises[1];
+  },
   computed: {
     displayProducts() {
       if (this.selectedFilter === "") {
@@ -26,18 +34,24 @@ export default {
     onFilterSelect(selected) {
       this.selectedFilter = selected;
     },
+    ...mapActions(useCartStore, ["addToCart"]),
   },
 };
 </script>
 
 <template>
-  <Filters :activeItem="selectedFilter" @on-select="onFilterSelect" />
+  <Filters
+    :categories="categories"
+    :activeItem="selectedFilter"
+    @on-select="onFilterSelect"
+  />
+
   <section class="flex-container">
     <ProductCard
       v-for="product in displayProducts"
       :key="`products-${product.id}`"
       :product="product"
-      @on-add-to-cart="$emit('onAddToCart', $event)"
+      @on-add-to-cart="addToCart"
     />
   </section>
 </template>
