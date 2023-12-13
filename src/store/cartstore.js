@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { useUserStore } from "../store/userStore";
 
 export const useCartStore = defineStore("cart", {
   state: () => ({ products: [] }),
@@ -10,13 +11,16 @@ export const useCartStore = defineStore("cart", {
   },
   actions: {
     addToCart(selectedId) {
-      const productInCart = this.products.find(
-        (prod) => prod.id === selectedId
-      );
-      if (!productInCart) {
-        this.products.push({ id: selectedId, quantity: 1 });
-      } else {
-        productInCart.quantity += 1;
+      const userStore = useUserStore();
+      if (userStore.isAuthenticated) {
+        const productInCart = this.products.find(
+          (prod) => prod.id === selectedId
+        );
+        if (!productInCart) {
+          this.products.push({ id: selectedId, quantity: 1 });
+        } else {
+          productInCart.quantity += 1;
+        }
       }
     },
     // changeQuantity(productId, event) {

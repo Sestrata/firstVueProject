@@ -6,23 +6,19 @@ export default {
   computed: {
     ...mapState(useUserStore, ["profile", "isAuthenticated"]),
   },
-  created() {
-    if (!this.isAuthenticated) {
-      this.$router.push("/login");
-    }
-  },
 };
 </script>
 
 <template>
-  <div v-if="profile" class="profile">
-    <h1>Profile</h1>
+  <div class="profile">
+    <h1>PROFILE</h1>
     <img :src="profile.image" alt="" />
     <h3>{{ profile.firstName }} {{ profile.lastName }}</h3>
     <ul>
       <li>email: {{ profile.email }}</li>
       <li>username: {{ profile.username }}</li>
     </ul>
+    <h2>My favourites</h2>
   </div>
 </template>
 
@@ -38,10 +34,10 @@ export default {
 }
 
 .profile img {
-  border-radius: 50%;
-  border: 2px solid rgb(105, 143, 249);
+  border-radius: 100%;
+  border: 1px solid rgb(105, 143, 249);
   overflow: hidden;
-  margin: 30px auto;
+  margin: 0px auto;
 }
 
 .profile h3 {

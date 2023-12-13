@@ -1,6 +1,7 @@
 <script>
-import { mapState } from "pinia";
+import { mapState, mapActions } from "pinia";
 import { useCartStore } from "../../../store/cartstore";
+import { useUserStore } from "../../../store/userStore";
 
 export default {
   props: {
@@ -24,12 +25,26 @@ export default {
   emits: ["onAddToCart"],
   computed: {
     ...mapState(useCartStore, ["getProduct"]),
+    ...mapState(useUserStore, ["favouritesIds", "isAuthenticated"]),
     isDisabled() {
       const current = this.getProduct(this.product.id);
       if (!current) {
         return false;
       }
       return current.quantity >= this.product.stock;
+    },
+    isFavourites() {
+      return this.favouritesIds.includes(this.product.id);
+    },
+  },
+  methods: {
+    ...mapActions(useUserStore, ["addToFavourites", "removeFromFavourites"]),
+    onFavouritesClick() {
+      if (this.isFavourites) {
+        this.removeFromFavourites(this.product.id);
+      } else {
+        this.addToFavourites(this.product.id);
+      }
     },
   },
 };
@@ -38,6 +53,7 @@ export default {
 <template>
   <article class="photo">
     <section class="small-container">
+      <span v-if="isFavourites" class="favouritesIcon">💓</span>
       <img :src="product.thumbnail" alt="thumbnail" />
       <h2>{{ product.title }}</h2>
       <p>Category: {{ product.category }}</p>
@@ -46,6 +62,13 @@ export default {
       <h5>Rating: {{ product.rating }}</h5>
       <button @click="$emit('onAddToCart', product.id)" :disabled="isDisabled">
         Add to Cart
+      </button>
+      <button
+        v-if="isAuthenticated"
+        @click="onFavouritesClick"
+        :disabled="isDisabled"
+      >
+        {{ isFavourites ? "Remove from favourites" : "Add to favourites" }}
       </button>
     </section>
   </article>
@@ -84,6 +107,7 @@ export default {
   background-color: rgb(105, 143, 249);
   border: none;
   border-radius: 6px;
+  margin-bottom: 8px;
 }
 
 .small-container button:hover {

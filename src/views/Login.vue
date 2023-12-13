@@ -2,26 +2,28 @@
 import { login } from "../dataProviders/auth";
 import { mapActions } from "pinia";
 import { useUserStore } from "../store/userStore";
+import { RouterLink } from "vue-router";
 
 export default {
-  data() {
-    return {
-      user: {
-        username: "",
-        password: "",
-      },
-    };
-  },
-  methods: {
-    ...mapActions(useUserStore, ["setProfile"]),
-    async onSubmit() {
-      const userData = await login(this.user);
-      if (userData) {
-        this.setProfile(userData);
-        this.$router.push("/profile");
-      }
+    data() {
+        return {
+            user: {
+                username: "",
+                password: "",
+            },
+        };
     },
-  },
+    methods: {
+        ...mapActions(useUserStore, ["setProfile"]),
+        async onSubmit() {
+            const userData = await login(this.user);
+            if (userData) {
+                this.setProfile(userData);
+                this.$router.push("/profile");
+            }
+        },
+    },
+    components: { RouterLink }
 };
 </script>
 
@@ -37,6 +39,7 @@ export default {
     </div>
     <button type="submit">Submit</button>
   </form>
+  <RouterLink to="/register">If you don't have account, click here</RouterLink>
 </template>
 
 <style scoped>
@@ -47,7 +50,7 @@ form {
   flex-direction: column;
   padding: 40px;
   max-width: 400px;
-  margin: 0 auto;
+  margin: 10px auto;
 }
 
 button {

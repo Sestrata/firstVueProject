@@ -1,5 +1,5 @@
 <script>
-import { mapState } from "pinia";
+import { mapState, mapActions } from "pinia";
 import { useCartStore } from "../store/cartstore";
 import { useUserStore } from "../store/userStore";
 import { RouterLink } from "vue-router";
@@ -10,7 +10,10 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ["products"]),
-    ...mapState(useUserStore, ["profile"]),
+    ...mapState(useUserStore, ["profile", "isAuthenticated"]),
+  },
+  methods: {
+    ...mapActions(useUserStore, ["logout"]),
   },
 };
 </script>
@@ -21,13 +24,20 @@ export default {
       <ul>
         <li><RouterLink to="/">HOME</RouterLink></li>
         <li><RouterLink to="/category">CATEGORY</RouterLink></li>
-        <li v-if="profile">
+        <li v-if="isAuthenticated">
           <RouterLink to="/profile" class="profileImg">
-            PROFILE <img :src="profile.image" alt=""/>
+            PROFILE <img :src="profile.image" alt="" />
           </RouterLink>
         </li>
-        <li><RouterLink to="/login">LOGIN</RouterLink></li>
-        <li><RouterLink to="/register">REGISTER</RouterLink></li>
+        <li v-if="!isAuthenticated">
+          <RouterLink to="/login">LOGIN</RouterLink>
+        </li>
+        <li v-if="!isAuthenticated">
+          <RouterLink to="/register">REGISTER</RouterLink>
+        </li>
+        <li v-if="isAuthenticated">
+          <RouterLink @click="logout" to="/">LOGOUT</RouterLink>
+        </li>
         <li>
           <RouterLink to="/cart" role="button">
             CART
@@ -91,15 +101,15 @@ header nav ul li a:hover {
 
 .profileImg {
   display: flex;
-  gap: 0.6rem;
+  gap: 0.2rem;
   align-items: center;
 }
 .profileImg img {
-  width: 2rem;
+  width: 1.5rem;
   height: auto;
   border-radius: 100%;
   overflow: hidden;
-  border:1px solid black;
+  border: 1px solid black;
   background-color: rgb(118, 209, 255);
   margin: 0px auto;
 }

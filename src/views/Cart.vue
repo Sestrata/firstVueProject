@@ -35,46 +35,41 @@ export default {
       const curProduct = this.productsInfo.find((product) => product.id === id);
       return curProduct.title;
     },
-    getThumbnail(id){
+    getThumbnail(id) {
       const curProduct = this.productsInfo.find((product) => product.id === id);
       return curProduct.thumbnail;
-    }
+    },
   },
 };
 </script>
 
 <template>
-  <div>Cart</div>
+  <h1 class="cart">CART</h1>
   <ul v-for="product in products" :key="product.id">
-    <li><img :src="getThumbnail(product.id)" alt="thumbnail"></li>
+    <li><img :src="getThumbnail(product.id)" alt="thumbnail" /></li>
     <li>{{ getProductTitle(product.id) }}</li>
     <li>{{ product.quantity }}</li>
   </ul>
-  <!-- <table>
-    <thead>
-      <tr>
-        <th>Photo</th>
-        <th>Product name</th>
-        <th>Quantity</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="product in products" :key="product.id">
-        <th>{{ product.thumbnail }}</th>
-        <th>{{ getProductTitle(product.id) }}</th>
-        <th>{{ product.quantity }}</th>
-      </tr>
-    </tbody>
-  </table> -->
 </template>
 
 <style scoped>
+.cart {
+  margin-bottom: 60px;
+  text-align: center;
+}
 ul {
   display: flex;
   flex-direction: row;
 }
 ul li {
   list-style: none;
-  padding: 0 30px;
+  margin: 0 auto;
+}
+ul li img {
+  width: 5rem;
+  height: auto;
+  border-radius: 100%;
+  overflow: hidden;
+  margin: 0px auto;
 }
 </style>
