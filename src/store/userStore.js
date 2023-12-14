@@ -5,7 +5,7 @@ export const useUserStore = defineStore("user", {
     return {
       isAuthenticated: false,
       profile: null,
-      favouritesIds: [],
+      likesIds: [],
     };
   },
   actions: {
@@ -14,11 +14,11 @@ export const useUserStore = defineStore("user", {
       this.isAuthenticated = true;
       sessionStorage.setItem("user-profile", JSON.stringify(profileData));
     },
-    addToFavourites(id) {
-      this.favouritesIds.push(id);
+    addLikes(id) {
+      this.likesIds.push(id);
     },
-    removeFromFavourites(id) {
-      this.favouritesIds = this.favouritesIds.filter((f) => f !== id);
+    removeLikes(id) {
+      this.likesIds = this.likesIds.filter((l) => l !== id);
     },
     getPersistedProfile() {
       const persisted = sessionStorage.getItem("user-profile");

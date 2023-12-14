@@ -7,7 +7,7 @@ export default {
   props: {
     product: {
       type: Object,
-      reguired: true,
+      required: true,
       default: () => ({
         id: -1,
         title: "DEFAULT",
@@ -16,16 +16,16 @@ export default {
         discountPercentage: 0,
         rating: 0,
         stock: 0,
-        category: "animals",
-        thumbnail:
-          "https://images.unsplash.com/photo-1546587348-d12660c30c50?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bmF0dXJhbHxlbnwwfHwwfHx8MA%3D%3D",
+        category: "smartphones",
+        thumbnail: "https://i.dummyjson.com/data/products/41/thumbnail.webp",
+        images: ["https://i.dummyjson.com/data/products/41/1.jpg"],
       }),
     },
   },
   emits: ["onAddToCart"],
   computed: {
     ...mapState(useCartStore, ["getProduct"]),
-    ...mapState(useUserStore, ["favouritesIds", "isAuthenticated"]),
+    ...mapState(useUserStore, ["likesIds", "isAuthenticated"]),
     isDisabled() {
       const current = this.getProduct(this.product.id);
       if (!current) {
@@ -33,17 +33,17 @@ export default {
       }
       return current.quantity >= this.product.stock;
     },
-    isFavourites() {
-      return this.favouritesIds.includes(this.product.id);
+    isLikes() {
+      return this.likesIds.includes(this.product.id);
     },
   },
   methods: {
-    ...mapActions(useUserStore, ["addToFavourites", "removeFromFavourites"]),
-    onFavouritesClick() {
-      if (this.isFavourites) {
-        this.removeFromFavourites(this.product.id);
+    ...mapActions(useUserStore, ["addLikes", "removeLikes"]),
+    onLikesClick() {
+      if (this.isLikes) {
+        this.removeLikes(this.product.id);
       } else {
-        this.addToFavourites(this.product.id);
+        this.addLikes(this.product.id);
       }
     },
   },
@@ -53,22 +53,26 @@ export default {
 <template>
   <article class="photo">
     <section class="small-container">
-      <span v-if="isFavourites" class="favouritesIcon">💓</span>
+      <span v-if="isLikes" class="likesIcon">💓</span>
       <img :src="product.thumbnail" alt="thumbnail" />
       <h2>{{ product.title }}</h2>
       <p>Category: {{ product.category }}</p>
       <p>Description: {{ product.description }}</p>
       <h4>Price: {{ product.price }} $</h4>
       <h5>Rating: {{ product.rating }}</h5>
-      <button @click="$emit('onAddToCart', product.id)" :disabled="isDisabled">
+      <button
+        v-if="isAuthenticated"
+        @click="$emit('onAddToCart', product.id)"
+        :disabled="isDisabled"
+      >
         Add to Cart
       </button>
       <button
         v-if="isAuthenticated"
-        @click="onFavouritesClick"
+        @click="onLikesClick"
         :disabled="isDisabled"
       >
-        {{ isFavourites ? "Remove from favourites" : "Add to favourites" }}
+        {{ isLikes ? "Unlike" : "Like" }}
       </button>
     </section>
   </article>

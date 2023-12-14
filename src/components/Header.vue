@@ -10,7 +10,7 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ["products"]),
-    ...mapState(useUserStore, ["profile", "isAuthenticated"]),
+    ...mapState(useUserStore, ["profile", "isAuthenticated", "likesIds"]),
   },
   methods: {
     ...mapActions(useUserStore, ["logout"]),
@@ -26,7 +26,17 @@ export default {
         <li><RouterLink to="/category">CATEGORY</RouterLink></li>
         <li v-if="isAuthenticated">
           <RouterLink to="/profile" class="profileImg">
-            PROFILE <img :src="profile.image" alt="" />
+            <img :src="profile.image" alt="" />
+            <span class="profileName">{{ profile.firstName }}'s </span>PROFILE
+          </RouterLink>
+        </li>
+        <li v-if="isAuthenticated">
+          <RouterLink to="/favourites" class="favourites">
+            <span class="profileName">{{ profile.firstName }}'s </span
+            >FAVOURITES
+            <span class="favouritesLength" v-if="likesIds.length"
+              >({{ likesIds.length }})</span
+            >
           </RouterLink>
         </li>
         <li v-if="!isAuthenticated">
@@ -40,8 +50,10 @@ export default {
         </li>
         <li>
           <RouterLink to="/cart" role="button">
-            CART
-            <span v-if="products.length">({{ products.length }})</span>
+            🛒
+            <span class="cartLength" v-if="products.length"
+              >({{ products.length }})</span
+            >
           </RouterLink>
         </li>
       </ul>
@@ -79,11 +91,16 @@ header nav ul li {
   background-color: rgb(105, 143, 249);
   border-radius: 6px;
   box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.4);
+  position: relative;
 }
 
 header nav ul li:last-child {
   margin-right: 0px;
   background-color: rgb(118, 209, 255);
+}
+
+header nav ul li:last-child:hover {
+  background-color: white;
 }
 
 header nav ul li a {
@@ -112,5 +129,19 @@ header nav ul li a:hover {
   border: 1px solid black;
   background-color: rgb(118, 209, 255);
   margin: 0px auto;
+}
+
+.profileName,
+.favouritesLength {
+  font-style: italic;
+}
+.cartLength,
+.favouritesLength {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  color: black;
+  padding: 4px;
+  font-size: 0.8em;
 }
 </style>

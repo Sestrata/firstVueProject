@@ -1,6 +1,6 @@
 <script>
 import Filters from "./components/Filters.vue";
-import ProductCard from "./components/ProductCard.vue";
+import ProductCard from "./components/Productcard.vue";
 import { useCartStore } from "../../store/cartstore";
 import { mapActions } from "pinia";
 import { getAllProducts } from "../../dataProviders/products";

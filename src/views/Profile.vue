@@ -18,7 +18,6 @@ export default {
       <li>email: {{ profile.email }}</li>
       <li>username: {{ profile.username }}</li>
     </ul>
-    <h2>My favourites</h2>
   </div>
 </template>
 
@@ -37,7 +36,7 @@ export default {
   border-radius: 100%;
   border: 1px solid rgb(105, 143, 249);
   overflow: hidden;
-  margin: 0px auto;
+  margin: 30px auto;
 }
 
 .profile h3 {

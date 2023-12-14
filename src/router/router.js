@@ -3,6 +3,7 @@ import Home from "../views/Home.vue";
 import Category from "../views/Category/Category.vue";
 import Login from "../views/Login.vue";
 import Profile from "../views/Profile.vue";
+import Favourites from "../views/Favourites.vue";
 import Cart from "../views/Cart.vue";
 import Register from "../views/Register/Register.vue";
 import Logout from "../views/Logout.vue";
@@ -27,7 +28,8 @@ const routes = [
     },
   },
   { path: "/profile", component: Profile, beforeEnter: validateUser },
-  { path: "/cart", component: Cart },
+  { path: "/favourites", component: Favourites, beforeEnter: validateUser },
+  { path: "/cart", component: Cart, beforeEnter: validateUser },
   {
     path: "/register",
     component: Register,
