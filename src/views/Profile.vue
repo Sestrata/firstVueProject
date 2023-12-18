@@ -17,6 +17,7 @@ export default {
     <ul>
       <li>email: {{ profile.email }}</li>
       <li>username: {{ profile.username }}</li>
+      <li>gender: {{ profile.gender }}</li>
     </ul>
   </div>
 </template>
@@ -39,12 +40,12 @@ export default {
   margin: 30px auto;
 }
 
-.profile h3 {
-  margin: 0 auto;
+.profile h3,
+.profile ul {
+  text-align: center;
 }
 
 .profile ul li {
   list-style: none;
-  margin: 0 auto;
 }
 </style>

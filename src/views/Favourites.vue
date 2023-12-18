@@ -58,13 +58,13 @@ export default {
 ul {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 10px;
 }
 
 ul li {
   list-style: none;
-  margin: 0 30px;
+  margin: 0 10px;
 }
 
 .container :not(p),
@@ -80,16 +80,8 @@ ul li {
 ul li img {
   width: 5rem;
   height: auto;
-  border-radius: 100%;
+  border-radius: 6px;
   overflow: hidden;
   margin: 0px auto;
-}
-
-.totalSum {
-  text-align: right;
-  padding-right: 40px;
-  font-weight: bold;
-  font-size: large;
-  margin: 0;
 }
 </style>

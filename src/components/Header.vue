@@ -34,9 +34,9 @@ export default {
           <RouterLink to="/favourites" class="favourites">
             <span class="profileName">{{ profile.firstName }}'s </span
             >FAVOURITES
-            <span class="favouritesLength" v-if="likesIds.length"
-              >({{ likesIds.length }})</span
-            >
+            <span class="favouritesLength" v-if="likesIds.length">{{
+              likesIds.length
+            }}</span>
           </RouterLink>
         </li>
         <li v-if="!isAuthenticated">
@@ -48,12 +48,12 @@ export default {
         <li v-if="isAuthenticated">
           <RouterLink @click="logout" to="/">LOGOUT</RouterLink>
         </li>
-        <li>
+        <li v-if="isAuthenticated">
           <RouterLink to="/cart" role="button">
             🛒
-            <span class="cartLength" v-if="products.length"
-              >({{ products.length }})</span
-            >
+            <span class="cartLength" v-if="products.length">{{
+              products.length
+            }}</span>
           </RouterLink>
         </li>
       </ul>
@@ -94,15 +94,6 @@ header nav ul li {
   position: relative;
 }
 
-header nav ul li:last-child {
-  margin-right: 0px;
-  background-color: rgb(118, 209, 255);
-}
-
-header nav ul li:last-child:hover {
-  background-color: white;
-}
-
 header nav ul li a {
   text-decoration: none;
   color: black;
@@ -116,6 +107,9 @@ header nav ul li a:hover {
   color: white;
 }
 
+header nav ul li:active {
+  border-bottom: 1px solid black;
+}
 .profileImg {
   display: flex;
   gap: 0.2rem;
@@ -132,16 +126,23 @@ header nav ul li a:hover {
 }
 
 .profileName,
-.favouritesLength {
+.profileName {
   font-style: italic;
 }
+
 .cartLength,
 .favouritesLength {
   position: absolute;
   top: -3px;
   right: -3px;
-  color: black;
-  padding: 4px;
-  font-size: 0.8em;
+  width: 16px;
+  height: 16px;
+  border-radius: 100%;
+  background-color: rgb(5, 117, 245);
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
 }
 </style>

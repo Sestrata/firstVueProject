@@ -66,19 +66,18 @@ export default {
 }
 .container {
   margin: 0 auto;
-  border-bottom: 1px solid #000;
 }
 
 ul {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 10px;
 }
 
 ul li {
   list-style: none;
-  margin: 0 30px;
+  margin: 0 10px;
 }
 
 .container :not(p),
@@ -94,7 +93,7 @@ ul li {
 ul li img {
   width: 5rem;
   height: auto;
-  border-radius: 100%;
+  border-radius: 6px;
   overflow: hidden;
   margin: 0px auto;
 }
@@ -105,5 +104,6 @@ ul li img {
   font-weight: bold;
   font-size: large;
   margin: 0;
+  border-bottom: 1px solid #000;
 }
 </style>
